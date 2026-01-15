@@ -443,23 +443,23 @@ void loop() {
 #else // milos, if we use h-shifter on proMicro with avg inputs
         clutch.val = 0;
         hbrake.val = 0;
-        shifter.x = analogRead(CLUTCH_PIN); // milos
-        shifter.y = analogRead(HBRAKE_PIN); // milos
+        //shifter.x = analogRead(CLUTCH_PIN); // milos
+        //shifter.y = analogRead(HBRAKE_PIN); // milos
 #endif // end of xy shifter
 #else // for leonardo we can avg pedal inputs and also have h-shifter axis
         clutch.val = analog_inputs[CLUTCH_INPUT];
         hbrake.val = analog_inputs[HBRAKE_INPUT];
 #ifdef USE_XY_SHIFTER
-        shifter.x = analogRead(SHIFTER_X_PIN); // milos
-        shifter.y = analogRead(SHIFTER_Y_PIN); // milos
+        //shifter.x = analogRead(SHIFTER_X_PIN); // milos
+        //shifter.y = analogRead(SHIFTER_Y_PIN); // milos
 #endif // end of h-shifter
 #endif // end of proMicro
 #else // if no avg
 #ifndef USE_SPLITAXIS
-        accel.val = analogRead(ACCEL_PIN); // milos, Z axis
+        //accel.val = analogRead(ACCEL_PIN); // milos, Z axis
 #else // milos, use combined axis for gas and brake
 #ifdef USE_QUADRATURE_ENCODER // milos, when using optical encoder
-        combinedAxis = analogRead(ACCEL_PIN); // milos, store accelerator into temporary axis
+        //combinedAxis = analogRead(ACCEL_PIN); // milos, store accelerator into temporary axis
         if (combinedAxis >= 512) {
           accel.val = map(combinedAxis, 512, 1023, 0, 1023); // milos, this is now Z-axis (accelerator)
           brake.val = 0;
@@ -468,8 +468,8 @@ void loop() {
           brake.val = map(combinedAxis, 511, 0, 0, 1023);  // milos, this is now Y-axis (brake)
         }
 #else // milos, without optical encoder
-        accel.val = analogRead(ACCEL_PIN); // milos, accelerator is used for X axis
-        combinedAxis = analogRead(BRAKE_PIN); // milos, store brake into temporary axis
+        //accel.val = analogRead(ACCEL_PIN); // milos, accelerator is used for X axis
+        //combinedAxis = analogRead(BRAKE_PIN); // milos, store brake into temporary axis
         if (combinedAxis >= 512) {
           gasAxis = map(combinedAxis, 512, 1023, 0, Z_AXIS_PHYS_MAX); // milos, this is now Z-axis (accelerator)
           brake.val = 0;
@@ -481,31 +481,31 @@ void loop() {
 #endif // end of splitaxis
 #ifndef USE_PROMICRO // milos, for Leonardo and Micro
 #ifndef USE_EXTRABTN // milos, we can have clutch and hbrake only when not using extra buttons
-        clutch.val = analogRead(CLUTCH_PIN); // milos, RX axis
-        hbrake.val = analogRead(HBRAKE_PIN); // milos, RY axis
+        //clutch.val = analogRead(CLUTCH_PIN); // milos, RX axis
+        //hbrake.val = analogRead(HBRAKE_PIN); // milos, RY axis
 #else // if extra buttons
         clutch.val = 0; // milos, RX axis
         hbrake.val = 0; // milos, RY axis
 #endif // end of extra button
 #ifdef USE_XY_SHIFTER // milos
-        shifter.x = analogRead(SHIFTER_X_PIN); // milos
-        shifter.y = analogRead(SHIFTER_Y_PIN); // milos
+        //shifter.x = analogRead(SHIFTER_X_PIN); // milos
+        //shifter.y = analogRead(SHIFTER_Y_PIN); // milos
 #endif // end of xy shifter
 #else // if we use proMicro
 #ifdef USE_XY_SHIFTER // milos, compromize - for proMicro with XY shifter, we can't have clutch and handbrake
         clutch.val = 0; // milos, RX axis
         hbrake.val = 0; // milos, RY axis
-        shifter.x = analogRead(CLUTCH_PIN); // milos, use clutch analog input instead
-        shifter.y = analogRead(HBRAKE_PIN); // milos, use handbrake analog input instead
+        //shifter.x = analogRead(CLUTCH_PIN); // milos, use clutch analog input instead
+        //shifter.y = analogRead(HBRAKE_PIN); // milos, use handbrake analog input instead
 #else // for proMicro, when no XY shifter
 #ifndef USE_EXTRABTN // milos, only available if not using extra buttons
-        clutch.val = analogRead(CLUTCH_PIN); // milos, RX axis
-        hbrake.val = analogRead(HBRAKE_PIN); // milos, RY axis
+        //clutch.val = analogRead(CLUTCH_PIN); // milos, RX axis
+        //hbrake.val = analogRead(HBRAKE_PIN); // milos, RY axis
 #else // if using extra buttons
 #ifndef USE_LOAD_CELL
         clutch.val = 0; // milos, RX axis unavailable when no lc
 #else // if no load cell
-        clutch.val = analogRead(CLUTCH_PIN); // milos, RX axis is available if we use lc
+        //clutch.val = analogRead(CLUTCH_PIN); // milos, RX axis is available if we use lc
 #endif // end of use lc
         hbrake.val = 0; // milos, RY axis is allways unavailable
 #endif // end of extra button
@@ -532,7 +532,7 @@ void loop() {
         brake.val = analog_inputs[BRAKE_INPUT];
 #else // if no avg
 #ifndef USE_SPLITAXIS // milos, calculated above
-        brake.val = analogRead(BRAKE_PIN); // milos, Y axis
+        //brake.val = analogRead(BRAKE_PIN); // milos, Y axis
 #else
 #endif
 #endif // end of avg
