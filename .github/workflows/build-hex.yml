@@ -85,14 +85,30 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          Write-Host "VERSIONS=[$env:VERSIONS]"
           $versions = $env:VERSIONS -split '[,\s]+' | Where-Object { $_ -ne '' }
           foreach ($version in $versions) {
             $leo = "brWheel_my/leonardo hex/fw_$version"
             $pro = "brWheel_my/promicro hex/fw_$version"
-            if (Test-Path $leo) { git add "$leo" }
-            if (Test-Path $pro) { git add "$pro" }
+            Write-Host "Checking: $leo"
+            Write-Host "Checking: $pro"
+            if (Test-Path $leo) {
+              Write-Host "Exists: $leo"
+              Get-ChildItem $leo | Select-Object -First 5 | ForEach-Object { Write-Host "  $($_.Name)" }
+              git add "$leo"
+            } else {
+              Write-Host "Missing: $leo"
+            }
+            if (Test-Path $pro) {
+              Write-Host "Exists: $pro"
+              Get-ChildItem $pro | Select-Object -First 5 | ForEach-Object { Write-Host "  $($_.Name)" }
+              git add "$pro"
+            } else {
+              Write-Host "Missing: $pro"
+            }
           }
 
+          Write-Host "Git status before commit:"
           $status = git status --porcelain
           if ($status) {
             git commit -m "chore: rebuild hex"
